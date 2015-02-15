@@ -13,11 +13,6 @@ output:
 unzip("activity.zip")
 
 data<-read.csv2("activity.csv", header=TRUE, sep=",", na.strings="NA", colClasses=c("numeric", "Date", "numeric"))
-
-nasteps <- length(data$steps[is.na(data$steps)==TRUE])
-nadates <- length(data$date[is.na(data$date)==TRUE])
-naintervals <- length(data$interval[is.na(data$interval)==TRUE])
-completecases <- length(data$steps[complete.cases(data)==TRUE])
 ```
 
 ## What is mean total number of steps taken per day?
@@ -83,6 +78,34 @@ print(paste("Interval with the max avg :",interval))
 ```
 
 ## Imputing missing values
+
+
+```r
+nasteps <- length(data$steps[is.na(data$steps)==TRUE])
+nadates <- length(data$date[is.na(data$date)==TRUE])
+naintervals <- length(data$interval[is.na(data$interval)==TRUE])
+
+completecases <- length(data$steps[complete.cases(data)==TRUE])
+allcases <- length(data$steps)
+missing.values <- allcases - completecases
+
+print(paste("There are ", missing.values, " missing values."))
+```
+
+```
+## [1] "There are  2304  missing values."
+```
+
+```r
+datat2 <- datat
+for (i in which(is.na(datat$steps)) ) {
+  datat2$steps[i] <- summary_interval$avg_steps[datat2$interval[i]]
+}
+```
+
+```
+## Error in datat2$steps[i] <- summary_interval$avg_steps[datat2$interval[i]]: replacement has length zero
+```
 
 
 

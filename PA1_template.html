@@ -206,11 +206,6 @@ hr {
 <pre><code class="r">unzip(&quot;activity.zip&quot;)
 
 data&lt;-read.csv2(&quot;activity.csv&quot;, header=TRUE, sep=&quot;,&quot;, na.strings=&quot;NA&quot;, colClasses=c(&quot;numeric&quot;, &quot;Date&quot;, &quot;numeric&quot;))
-
-nasteps &lt;- length(data$steps[is.na(data$steps)==TRUE])
-nadates &lt;- length(data$date[is.na(data$date)==TRUE])
-naintervals &lt;- length(data$interval[is.na(data$interval)==TRUE])
-completecases &lt;- length(data$steps[complete.cases(data)==TRUE])
 </code></pre>
 
 <h2>What is mean total number of steps taken per day?</h2>
@@ -264,6 +259,29 @@ print(paste(&quot;Interval with the max avg :&quot;,interval))
 </code></pre>
 
 <h2>Imputing missing values</h2>
+
+<pre><code class="r">nasteps &lt;- length(data$steps[is.na(data$steps)==TRUE])
+nadates &lt;- length(data$date[is.na(data$date)==TRUE])
+naintervals &lt;- length(data$interval[is.na(data$interval)==TRUE])
+
+completecases &lt;- length(data$steps[complete.cases(data)==TRUE])
+allcases &lt;- length(data$steps)
+missing.values &lt;- allcases - completecases
+
+print(paste(&quot;There are &quot;, missing.values, &quot; missing values.&quot;))
+</code></pre>
+
+<pre><code>## [1] &quot;There are  2304  missing values.&quot;
+</code></pre>
+
+<pre><code class="r">datat2 &lt;- datat
+for (i in which(is.na(datat$steps)) ) {
+  datat2$steps[i] &lt;- summary_interval$avg_steps[datat2$interval[i]]
+}
+</code></pre>
+
+<pre><code>## Error in datat2$steps[i] &lt;- summary_interval$avg_steps[datat2$interval[i]]: replacement has length zero
+</code></pre>
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
