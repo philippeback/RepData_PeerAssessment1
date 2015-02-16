@@ -79,6 +79,8 @@ print(paste("Interval with the max avg :",interval))
 
 ## Imputing missing values
 
+Missing values are replaced using the averaged value for the interval.
+
 
 ```r
 nasteps <- length(data$steps[is.na(data$steps)==TRUE])
