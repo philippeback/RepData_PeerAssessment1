@@ -301,6 +301,24 @@ print(paste(&quot;Mean total number of steps taken - No NAs:&quot;,mean.total.of
 <pre><code>## [1] &quot;Median total number of steps taken - No NAs : 10766.1886792453&quot;
 </code></pre>
 
+<p>Do these values differ from the estimates from the first part of the assignment?</p>
+
+<p>The values do differ in the following way:</p>
+
+<pre><code class="r">print(mean.total.of.steps.per.day - mean.total.of.steps.per.day2)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">print(median.total.of.steps.per.day - median.total.of.steps.per.day2)
+</code></pre>
+
+<pre><code>## [1] -1.188679
+</code></pre>
+
+<p>What is the impact of imputing missing data on the estimates of the total daily number of steps?</p>
+
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
 </body>
