@@ -97,14 +97,35 @@ print(paste("There are ", missing.values, " missing values."))
 ```
 
 ```r
-datat2 <- datat
-for (i in which(is.na(datat$steps)) ) {
-  datat2$steps[i] <- summary_interval$avg_steps[datat2$interval[i]]
-}
+datat2<-datat
+
+joined <- left_join(datat2,summary_interval, by = "interval")
+  
+joined$steps[which(is.na(joined$steps))] <- joined$avg_steps[which(is.na(joined$steps))]
+
+by_day2 <- group_by(joined,date)
+summary2 <- summarize(by_day2,sum_steps = sum(steps))
+hist(summary2$sum_steps, breaks=20,main=("Histogram of Steps by Day - No NAs"),xlab="Total Steps",col="green")
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+
+```r
+mean.total.of.steps.per.day2 <- mean(summary2$sum_steps, na.rm=TRUE)
+median.total.of.steps.per.day2 <- median(summary2$sum_steps, na.rm=TRUE)
+print(paste("Mean total number of steps taken - No NAs:",mean.total.of.steps.per.day2))
 ```
 
 ```
-## Error in datat2$steps[i] <- summary_interval$avg_steps[datat2$interval[i]]: replacement has length zero
+## [1] "Mean total number of steps taken - No NAs: 10766.1886792453"
+```
+
+```r
+print(paste("Median total number of steps taken - No NAs :",median.total.of.steps.per.day2))
+```
+
+```
+## [1] "Median total number of steps taken - No NAs : 10766.1886792453"
 ```
 
 

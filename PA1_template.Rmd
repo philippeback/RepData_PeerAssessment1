@@ -60,11 +60,20 @@ missing.values <- allcases - completecases
 
 print(paste("There are ", missing.values, " missing values."))
 
-datat2 <- datat
-for (i in which(is.na(datat2$steps)) ) {
-  datat2$steps[i] <- summary_interval$avg_steps[ which(summary_interval$interval == datat2$interval[i])]
-}
+datat2<-datat
+
+joined <- left_join(datat2,summary_interval, by = "interval")
   
+joined$steps[which(is.na(joined$steps))] <- joined$avg_steps[which(is.na(joined$steps))]
+
+by_day2 <- group_by(joined,date)
+summary2 <- summarize(by_day2,sum_steps = sum(steps))
+hist(summary2$sum_steps, breaks=20,main=("Histogram of Steps by Day - No NAs"),xlab="Total Steps",col="green")
+
+mean.total.of.steps.per.day2 <- mean(summary2$sum_steps, na.rm=TRUE)
+median.total.of.steps.per.day2 <- median(summary2$sum_steps, na.rm=TRUE)
+print(paste("Mean total number of steps taken - No NAs:",mean.total.of.steps.per.day2))
+print(paste("Median total number of steps taken - No NAs :",median.total.of.steps.per.day2))
 
 ```
 
